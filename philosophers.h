@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/25 16:05:26 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/25 22:41:22 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philo {
 
 	pthread_t		th;
 	struct s_env	*back;
+	struct timeval	time;
 }				t_philo;
 
 typedef struct s_env {
@@ -38,18 +39,23 @@ typedef struct s_env {
 	int				num_times_to_eat;
 	int				deaths;
 
-	struct timeval	time;
+	struct timeval	start;
 	long int		start_time;
 	
 	t_philo			philo[200];
 	pthread_mutex_t	fork[200];
 }				t_env;
 
-int			ft_atoi(const char *nptr);
+/*		Initialization and Cleanup	*/
 void		var_attribution(t_env *args, int argc, char **argv);
-void		init_philo_forks(t_env *args);
+void		init_philo(t_env *args);
+void		init_threads(t_env *args);
 void		destroy_threads_mutex(t_env *args);
+
+/*		Utils		*/
+int			ft_atoi(const char *nptr);
 long int	get_time(struct timeval time);
+
 void*		routine(void* arg);
 
 #endif
