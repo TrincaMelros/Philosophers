@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/24 13:23:20 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/25 12:22:02 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ void	var_attribution(t_env *args, int argc, char **argv)
 		args->num_times_to_eat = ft_atoi(argv[5]);
 	else
 		args->num_times_to_eat = -1;
-	gettimeofday(&(args->time), NULL);
-	args->start_time = args->time.tv_sec * 1000000 + args->time.tv_usec;
+	args->start_time = get_time(args->time);
 
 }
 
-void	create_threads_mutex(t_env *args)
+void	init_philo_forks(t_env *args)
 {
 	int			i;
 	int			num;
@@ -61,11 +60,15 @@ void	create_threads_mutex(t_env *args)
 	num = args->num_of_philo;
 	i = -1;
 	while (++i < num)
+		args->philo[i].envi = args;
+	i = -1;
+	while (++i < num)
 		pthread_mutex_init(&(args->fork[i]), NULL);
 	i = -1;
 	while (++i < num)
 	{
-		pthread_create(&(args->philo[i].th), NULL, &routine, (void *)args);
+		pthread_create(&(args->philo[i].th), NULL, &routine, \
+				(void *)&(args->philo[i]));
 		printf("Thread %d was created\n", i);
 	}
 }
@@ -85,4 +88,13 @@ void	destroy_threads_mutex(t_env *args)
 	i = -1;
 	while (++i < num)
 		pthread_mutex_destroy(&(args->fork[i]));
+}
+
+long int	get_time(struct timeval time)
+{
+	long int f;
+
+	gettimeofday(&time, NULL);
+	f = time.tv_sec * 1000000 + time.tv_usec;
+	return (f);
 }

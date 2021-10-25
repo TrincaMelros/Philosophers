@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:51:01 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/24 13:31:46 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/25 12:22:00 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 int mails = 0;
 
+
+
 void*	routine(void* arg)
 {
-	t_env	*bros;
+	t_philo	*ph;
 	int i;
 
-	bros = (t_env *)arg;
+	ph = (t_philo *)arg;
 	i = 0;
 	while (i < 1000000)
 	{
-		pthread_mutex_lock(&bros->fork[0]);
+		pthread_mutex_lock(&ph->envi->fork[0]);
 		mails++;
-		pthread_mutex_unlock(&bros->fork[0]);
+		pthread_mutex_unlock(&ph->envi->fork[0]);
 		i++;
 	}
 	return (NULL);
@@ -33,13 +35,15 @@ void*	routine(void* arg)
 
 int	main(int argc, char **argv)
 {
-	t_env	args;
+	t_env	*args;
 	
 	if (argc < 5 || argc > 6)
 		return (1);
-	var_attribution(&args, argc, argv);
-	create_threads_mutex(&args);
-	destroy_threads_mutex(&args);
-	printf("mails: %d\nstart_time: %ld\n", mails, args.start_time);
+	args = malloc(sizeof(t_env));
+	var_attribution(args, argc, argv);
+	init_philo_forks(args);
+	destroy_threads_mutex(args);
+	printf("mails: %d\nstart_time: %ld\n", mails, args->start_time);
+	free(args);
 	return (0);
 }
