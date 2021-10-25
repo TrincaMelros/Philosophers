@@ -6,28 +6,60 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:51:01 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/25 22:41:23 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 00:08:09 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philosophers.h"
+
+void	death(t_philo *ph)
+{
+	printf("[%ld]: %d died\n", \
+			(get_time(ph->time) - ph->back->start_time), ph->nbr);
+	exit(0);
+}
+
+void	thinking(t_philo *ph)
+{
+	if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
+			exit(0);
+
+}
+
+void	eating(t_philo *ph)
+{
+	pthread_mutex_lock(ph->left_fork);
+	printf("[%ld]: Philo %d has taken a fork\n", \
+			(get_time(ph->time) - ph->back->start_time), ph->nbr);
+	pthread_mutex_lock(ph->right_fork);
+	printf("[%ld]: Philo %d has taken a fork\n", \
+			(get_time(ph->time) - ph->back->start_time), ph->nbr);
+	ph->last_ate = get_time(ph->time);
+	printf("[%ld]: Philo %d is eating\n", \
+			(get_time(ph->time) - ph->back->start_time), ph->nbr);
+	while (get_time(ph->time) - ph->last_ate < ph->back->time_to_eat)
+		if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
+			exit(0);
+	pthread_mutex_unlock(ph->left_fork);
+	pthread_mutex_unlock(ph->right_fork);
+}
 
 void*	routine(void* arg)
 {
 	t_philo	*ph;
 
 	ph = (t_philo *)arg;
-	ph->last_ate = get_time(ph->time);
 	while (!ph->back->deaths)
 	{
-		pthread_mutex_lock(ph->left_fork);
-		pthread_mutex_lock(ph->right_fork);
-		usleep(200000);
-		printf("[%ld]: Philo %d has finished eating\n", \
-				(get_time(ph->time) - ph->back->start_time) / 1000, ph->nbr);
-		pthread_mutex_unlock(ph->left_fork);
-		pthread_mutex_unlock(ph->right_fork);
-		usleep(200000);
+		if (ph->nbr % 2)
+			usleep(ph->back->time_to_eat * 1000);
+		eating(ph);
+		printf("[%ld]: Philo %d has started sleeping\n", \
+				(get_time(ph->time) - ph->back->start_time), ph->nbr);
+		while (get_time(ph->time) - (ph->last_ate + ph->back->time_to_eat) \
+				< ph->back->time_to_sleep)
+			if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
+				return (NULL);
 	}
 	return (NULL);
 }

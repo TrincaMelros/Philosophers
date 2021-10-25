@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/25 22:41:25 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 00:06:19 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ long int	get_time(struct timeval t)
 	long int f;
 
 	gettimeofday(&t, NULL);
-	f = (t.tv_sec * 1000000) + t.tv_usec;
+	f = (t.tv_sec * 1000) + (t.tv_usec / 1000);
 	return (f);
 }
