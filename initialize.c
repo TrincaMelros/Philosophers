@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 12:37:12 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 17:36:41 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 void	var_attribution(t_env *args, int argc, char **argv)
 {
+	int	i;
+
 	args->num_of_philo = ft_atoi(argv[1]);
 	args->time_to_die = ft_atoi(argv[2]);
 	args->time_to_eat = ft_atoi(argv[3]);
@@ -32,8 +34,8 @@ void	var_attribution(t_env *args, int argc, char **argv)
 	args->deaths = 0;
 	pthread_mutex_init(&(args->message_lock), NULL);
 	i = -1;
-	while (++i < num_of_philo)
-		fork_lock[i] = 0;
+	while (++i < args->num_of_philo)
+		args->fork_lock[i] = 0;
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 12:39:54 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 17:36:39 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void		destroy_threads_mutex(t_env *args);
 /*		Utils		*/
 int			ft_atoi(const char *nptr);
 long int	get_time(struct timeval time);
+void		message(t_philo *ph, int i, long int timer);
+void		kill(t_philo *ph, long int timer);
 
 void*		routine(void* arg);
 

@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 13:01:26 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 17:36:37 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	message(t_philo *ph, int i, long int timer)
 	long int	og_time;
 
 	og_time = ph->back->start_time;
-	pthread_mutex_lock(ph->back->message_lock);
+	pthread_mutex_lock(&ph->back->message_lock);
 	if (i == 1)
 		printf("[%ld]: %d has taken a fork\n", timer - og_time, ph->nbr);
 	else if (i == 2)
@@ -63,5 +63,12 @@ void	message(t_philo *ph, int i, long int timer)
 		printf("[%ld]: %d is thinking\n", timer - og_time, ph->nbr);
 	else if (i == 5)
 		printf("[%ld]: %d died\n", timer - og_time, ph->nbr);
-	pthread_mutex_unlock(ph->back->message_lock);
+	pthread_mutex_unlock(&ph->back->message_lock);
+}
+
+void	kill(t_philo *ph, long int timer)
+{
+	args->deaths = 1;
+	message(ph, DIED, get_time(timer));
+	exit(0);
 }
