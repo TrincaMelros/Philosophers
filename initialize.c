@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 17:36:41 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 23:49:52 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	init_philo(t_env *args)
 	while (++i < args->num_of_philo)
 	{
 		args->philo[i].nbr = i + 1;
+		args->philo[i].last_ate = 0;
+		args->philo[i].times_ate = 0;
 		args->philo[i].back = args;
 		pthread_mutex_init(&(args->fork[i]), NULL);
 		args->philo[i].left_fork = &(args->fork[i]);

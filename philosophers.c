@@ -6,84 +6,21 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:51:01 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 17:36:35 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 23:36:59 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philosophers.h"
-
-void	death(t_philo *ph)
-{
-	printf("[%ld]: %d died\n", \
-			(get_time(ph->time) - ph->back->start_time), ph->nbr);
-	exit(0);
-}
-
-void	thinking(t_philo *ph)
-{
-	if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
-			exit(0);
-
-}
-
-void	pick_forks(t_philo *ph)
-{
-	if (ph->nbr != ph->back->num_of_philo)
-	{
-		while (ph->back->fork_lock[ph->nbr - 1] && ph->back->fork_lock[ph->nbr])
-			if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
-				kill(ph, get_time(ph->time));
-		pthread_mutex_lock(ph->left_fork);
-		pthread_mutex_lock(ph->right_fork);
-		ph->back->fork_lock[ph->nbr - 1] = 1;
-		ph->back->fork_lock[ph->nbr] = 1;
-		pthread_mutex_unlock(ph->left_fork);
-		pthread_mutex_unlock(ph->right_fork);
-	}
-	else
-	{
-		while (ph->back->fork_lock[ph->nbr] && ph->back->fork_lock[0])
-			if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
-				kill(ph, get_time(ph->time));
-		pthread_mutex_lock(ph->left_fork);
-		pthread_mutex_lock(ph->right_fork);
-		ph->back->fork_lock[ph->nbr - 1] = 1;
-		ph->back->fork_lock[0] = 1;
-		pthread_mutex_unlock(ph->left_fork);
-		pthread_mutex_unlock(ph->right_fork);
-	}
-	message(ph, TAKEN_FORK, get_time(ph->time));
-	message(ph, TAKEN_FORK, get_time(ph->time));
-}
-
-void	eating(t_philo *ph)
-{
-	ph->last_ate = get_time(ph->time);
-	message(ph, EATING, get_time(ph->
-	while (get_time(ph->time) - ph->last_ate < ph->back->time_to_eat)
-		if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
-			kill(ph, get_time(ph->time));
-	pthread_mutex_unlock(ph->left_fork);
-	pthread_mutex_unlock(ph->right_fork);
-}
 
 void*	routine(void* arg)
 {
 	t_philo	*ph;
 
 	ph = (t_philo *)arg;
-	while (!ph->back->deaths)
+	while (1)
 	{
-		if (ph->nbr % 2)
-			usleep(ph->back->time_to_eat * 1000);
-		pick_forks(ph);
 		eating(ph);
-		printf("[%ld]: Philo %d has started sleeping\n", \
-				(get_time(ph->time) - ph->back->start_time), ph->nbr);
-		while (get_time(ph->time) - (ph->last_ate + ph->back->time_to_eat) \
-				< ph->back->time_to_sleep)
-			if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
-				return (NULL);
+		sleep_think(ph);
 	}
 	return (NULL);
 }

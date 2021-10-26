@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 17:36:37 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 23:49:58 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	message(t_philo *ph, int i, long int timer)
 
 void	kill(t_philo *ph, long int timer)
 {
-	args->deaths = 1;
-	message(ph, DIED, get_time(timer));
+	ph->back->deaths = 1;
+	message(ph, DIED, timer);
 	exit(0);
 }

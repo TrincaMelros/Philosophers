@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 17:36:39 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 23:49:56 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@
 # define SLEEPING	3
 # define THINKING	4
 # define DIED		5
+# define LOCK		6
+# define UNLOCK		7
 
 typedef struct s_philo {
 	long int		last_ate;
 	int				nbr;
+	int				times_ate;
 
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -65,6 +68,12 @@ int			ft_atoi(const char *nptr);
 long int	get_time(struct timeval time);
 void		message(t_philo *ph, int i, long int timer);
 void		kill(t_philo *ph, long int timer);
+
+/*		Operations		*/
+void		fork_locking_last(t_philo *ph, int i);
+void		fork_locking(t_philo *ph, int i);
+void		eating(t_philo *ph);
+void		sleep_think(t_philo *ph);
 
 void*		routine(void* arg);
 
