@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 00:06:23 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 12:39:54 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 #include <sys/time.h>
 #include <pthread.h>
 #include <stdlib.h>
+
+# define TAKEN_FORK 1
+# define EATING		2
+# define SLEEPING	3
+# define THINKING	4
+# define DIED		5
 
 typedef struct s_philo {
 	long int		last_ate;
@@ -43,7 +49,9 @@ typedef struct s_env {
 	long int		start_time;
 	
 	t_philo			philo[200];
+	int				fork_lock[200];
 	pthread_mutex_t	fork[200];
+	pthread_mutex_t	message_lock;
 }				t_env;
 
 /*		Initialization and Cleanup	*/

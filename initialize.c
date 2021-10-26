@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/25 22:34:42 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/26 12:37:12 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void	var_attribution(t_env *args, int argc, char **argv)
 	else
 		args->num_times_to_eat = -1;
 	args->deaths = 0;
+	pthread_mutex_init(&(args->message_lock), NULL);
+	i = -1;
+	while (++i < num_of_philo)
+		fork_lock[i] = 0;
 
 }
 
@@ -103,4 +107,5 @@ void	destroy_threads_mutex(t_env *args)
 		pthread_join(args->philo[i].th, NULL);
 		pthread_mutex_destroy(&(args->fork[i]));
 	}
+	pthread_mutex_destroy(&(args->message_lock));
 }
