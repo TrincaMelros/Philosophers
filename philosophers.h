@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 23:49:56 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/27 13:44:18 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_philo {
 
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	int				l_f;
+	int				r_f;
 
 	pthread_t		th;
 	struct s_env	*back;
@@ -70,8 +72,8 @@ void		message(t_philo *ph, int i, long int timer);
 void		kill(t_philo *ph, long int timer);
 
 /*		Operations		*/
-void		fork_locking_last(t_philo *ph, int i);
-void		fork_locking(t_philo *ph, int i);
+void		drop_forks(t_philo *ph);
+void		pick_forks(t_philo *ph);
 void		eating(t_philo *ph);
 void		sleep_think(t_philo *ph);
 

@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:51:01 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/26 23:36:59 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/27 13:44:09 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void*	routine(void* arg)
 	ph = (t_philo *)arg;
 	while (1)
 	{
+		pick_forks(ph);
 		eating(ph);
 		sleep_think(ph);
 	}
