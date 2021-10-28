@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/27 19:20:37 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:49:21 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define LEFT		6
 # define RIGHT		7
 # define BOTH		8
+# define NUM_ARGS	9
+# define NOT_NUM	10
+# define NEG_NUM	11
+# define NUM_PHILO	12
+# define ONE_PHILO	13
 
 typedef struct s_philo {
 	long int		last_ate;
@@ -52,6 +57,7 @@ typedef struct s_env {
 	int				time_to_sleep;
 	int				num_times_to_eat;
 	int				deaths;
+	int				last_arg;
 
 	struct timeval	start;
 	long int		start_time;
@@ -62,6 +68,12 @@ typedef struct s_env {
 	pthread_mutex_t	message_lock;
 }				t_env;
 
+/*		Arg Validation		*/
+int			is_digit(char **argv, int argc);
+int			is_negative(char **argv, int argc);
+int			error_message(int f, int time);
+int			arg_validation(int argc, char **argv);
+
 /*		Initialization and Cleanup	*/
 void		var_attribution(t_env *args, int argc, char **argv);
 void		init_philo(t_env *args);
@@ -71,16 +83,17 @@ void		destroy_threads_mutex(t_env *args);
 /*		Utils		*/
 int			ft_atoi(const char *nptr);
 long int	get_time(struct timeval time);
-void		message(t_philo *ph, int i, long int timer);
 void		kill(t_philo *ph, long int timer);
+void		is_dead(t_philo *ph);
+int			all_philos_ate(t_env *args);
 
 /*		Operations		*/
 void		drop_forks(t_philo *ph, int i);
 void		pick_forks(t_philo *ph);
 void		eating(t_philo *ph);
 void		sleep_think(t_philo *ph);
+void		message(t_philo *ph, int i, long int timer);
 
-void		is_dead(t_philo *ph);
 void*		routine(void* arg);
 
 #endif

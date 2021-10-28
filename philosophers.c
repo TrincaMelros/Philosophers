@@ -1,22 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester.c                                           :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:51:01 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 12:08:37 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:48:59 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
-
-void	is_dead(t_philo *ph)
-{
-	if((get_time(ph->time) - ph->back->start_time) - ph->last_ate > ph->back->time_to_die)
-		kill(ph, get_time(ph->time));
-}
+#include "./philosophers.h"
 
 void*	routine(void* arg)
 {
@@ -40,7 +34,7 @@ int	main(int argc, char **argv)
 {
 	t_env	*args;
 	
-	if (argc < 5 || argc > 6)
+	if (arg_validation(argc, argv))
 		return (1);
 	args = malloc(sizeof(t_env));
 	var_attribution(args, argc, argv);

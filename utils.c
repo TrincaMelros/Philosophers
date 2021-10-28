@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 12:35:21 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:41:09 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,26 @@ long int	get_time(struct timeval t)
 	return (f);
 }
 
-void	message(t_philo *ph, int i, long int timer)
-{
-	long int	og_time;
-
-	og_time = ph->back->start_time;
-	pthread_mutex_lock(&ph->back->message_lock);
-	if (i == 1)
-		printf("[%ld]: %d has taken a fork\n", timer - og_time, ph->nbr);
-	else if (i == 2)
-		printf("[%ld]: %d is eating\n", timer - og_time, ph->nbr);
-	else if (i == 3)
-		printf("[%ld]: %d is sleeping\n", timer - og_time, ph->nbr);
-	else if (i == 4)
-		printf("[%ld]: %d is thinking\n", timer - og_time, ph->nbr);
-	else if (i == 5)
-		printf("[%ld]: %d died\n", timer - og_time, ph->nbr);
-	pthread_mutex_unlock(&ph->back->message_lock);
-}
-
 void	kill(t_philo *ph, long int timer)
 {
 	ph->back->deaths = 1;
 	message(ph, DIED, timer);
 	exit(0);
+}
+
+void	is_dead(t_philo *ph)
+{
+	if((get_time(ph->time) - ph->back->start_time) - ph->last_ate > ph->back->time_to_die)
+		kill(ph, get_time(ph->time));
+}
+
+int	all_philos_ate(t_env *args)
+{
+	int i;
+
+	i = -1;
+	while (++i < args->num_of_philo)
+		if (args->philo[i].times_ate != args->num_times_to_eat)
+			return (0);
+	return (1);
 }

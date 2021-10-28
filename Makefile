@@ -6,7 +6,7 @@
 #    By: malmeida <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/28 12:04:27 by malmeida          #+#    #+#              #
-#    Updated: 2021/10/28 12:07:11 by malmeida         ###   ########.fr        #
+#    Updated: 2021/10/28 13:23:46 by malmeida         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC_PHILO	=	./srcs/*.c
 
 			# Compiling Variables #
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 INC		= -I./includes
 RM		= rm -f
 
@@ -37,7 +37,7 @@ $(NAME): all
 
 $(PHILO): $(SRC_PHILO)
 	@ $(CC) $(CFLAG) $(SRC_PHILO) -o $(PHILO)
-	@printf "[$(GREEN)SUCCESS$(RESET)] PHilosophers compiled.\n"
+	@printf "[$(GREEN)SUCCESS$(RESET)] Philosophers compiled.\n"
 
 clean:
 	@ $(RM) $(PHILO)

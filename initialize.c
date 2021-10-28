@@ -6,11 +6,11 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 12:08:06 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:37:00 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "./philosophers.h"
 
 /*
 **					# Var Attribution #
@@ -28,9 +28,15 @@ void	var_attribution(t_env *args, int argc, char **argv)
 	args->time_to_eat = ft_atoi(argv[3]);
 	args->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
+	{
 		args->num_times_to_eat = ft_atoi(argv[5]);
+		args->last_arg = 1;
+	}
 	else
-		args->num_times_to_eat = -1;
+	{
+		args->num_times_to_eat = 0;
+		args->last_arg = 0;
+	}
 	args->deaths = 0;
 	pthread_mutex_init(&(args->message_lock), NULL);
 	i = -1;
