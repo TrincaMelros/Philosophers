@@ -6,11 +6,11 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/27 19:20:33 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 12:08:06 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosophers.h"
+#include "../includes/philosophers.h"
 
 /*
 **					# Var Attribution #
