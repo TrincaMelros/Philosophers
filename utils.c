@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 14:41:09 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:06:57 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,15 @@ long int	get_time(struct timeval t)
 	return (f);
 }
 
-void	kill(t_philo *ph, long int timer)
-{
-	ph->back->deaths = 1;
-	message(ph, DIED, timer);
-	exit(0);
-}
-
 void	is_dead(t_philo *ph)
 {
 	if((get_time(ph->time) - ph->back->start_time) - ph->last_ate > ph->back->time_to_die)
-		kill(ph, get_time(ph->time));
+	{
+		pthread_mutex_lock(&ph->back->death);
+		ph->back->deaths = 1;
+		message(ph, DIED, get_time(ph->time));
+		pthread_mutex_unlock(&ph->back->death);
+	}
 }
 
 int	all_philos_ate(t_env *args)

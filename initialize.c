@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 14:37:00 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:08:54 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	var_attribution(t_env *args, int argc, char **argv)
 	}
 	args->deaths = 0;
 	pthread_mutex_init(&(args->message_lock), NULL);
+	pthread_mutex_init(&(args->death), NULL);
 	i = -1;
 	while (++i < args->num_of_philo)
 		args->fork_lock[i] = 0;
-
 }
 
 /*
@@ -105,24 +105,22 @@ void	init_threads(t_env *args)
 	}
 }
 
-/*
-**					# Destroy #
-**
-**		Joins the threads as they finish and destroy the mutexes that have
-**		been allocated.
-*/
-
-void	destroy_threads_mutex(t_env *args)
+void	wait_threads(t_env *args)
 {
 	int	i;
-	int	num;
 
-	num = args->num_of_philo;
 	i = -1;
-	while (++i < num)
-	{
+	while (++i < args->num_of_philo)
 		pthread_join(args->philo[i].th, NULL);
+}
+
+void	garbage_collector(t_env *args)
+{
+	int	i;
+
+	i = -1;
+	while (++i < args->num_of_philo)
 		pthread_mutex_destroy(&(args->fork[i]));
-	}
 	pthread_mutex_destroy(&(args->message_lock));
+	pthread_mutex_destroy(&(args->death));
 }

@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 14:49:21 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 17:57:51 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_env {
 	int				fork_lock[200];
 	pthread_mutex_t	fork[200];
 	pthread_mutex_t	message_lock;
+	pthread_mutex_t	death;
 }				t_env;
 
 /*		Arg Validation		*/
@@ -78,7 +79,8 @@ int			arg_validation(int argc, char **argv);
 void		var_attribution(t_env *args, int argc, char **argv);
 void		init_philo(t_env *args);
 void		init_threads(t_env *args);
-void		destroy_threads_mutex(t_env *args);
+void		wait_threads(t_env *args);
+void		garbage_collector(t_env *args);
 
 /*		Utils		*/
 int			ft_atoi(const char *nptr);
@@ -95,5 +97,6 @@ void		sleep_think(t_philo *ph);
 void		message(t_philo *ph, int i, long int timer);
 
 void*		routine(void* arg);
+int			check_death(t_philo *ph);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 23:07:35 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 14:48:55 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:12:03 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	drop_forks(t_philo *ph, int i)
 		ph->back->fork_lock[ph->r_f] = 0;
 	pthread_mutex_unlock(ph->left_fork);
 	pthread_mutex_unlock(ph->right_fork);
+	ph->has_leftfork = 0;
+	ph->has_rightfork = 0;
 }
 
 void	pick_forks(t_philo *ph)
@@ -46,37 +48,34 @@ void	pick_forks(t_philo *ph)
 		drop_forks(ph, RIGHT);
 	else if (!ph->has_rightfork && ph->has_leftfork)
 		drop_forks(ph, LEFT);
+	is_dead(ph);
 }
 
 void	eating(t_philo *ph)
 {
-	message(ph, TAKEN_FORK, get_time(ph->time));
-	message(ph, TAKEN_FORK, get_time(ph->time));
-	ph->last_ate = get_time(ph->time);
-	message(ph, EATING, get_time(ph->time));
-	while (get_time(ph->time) - ph->last_ate < ph->back->time_to_eat)
-		if ((get_time(ph->time) - ph->back->start_time) - ph->last_ate > ph->back->time_to_die)
-			kill(ph, get_time(ph->time));
-	drop_forks(ph, BOTH);
-	ph->times_ate++;
-	if (ph->back->last_arg && ph->times_ate == ph->back->num_times_to_eat)
+	if (!check_death(ph))
 	{
-		printf("Philo %d ate %d times\n", ph->nbr, ph->times_ate);
-		while (!all_philos_ate(ph->back))
-		exit(0);
+		message(ph, TAKEN_FORK, get_time(ph->time));
+		message(ph, TAKEN_FORK, get_time(ph->time));
+		ph->last_ate = get_time(ph->time) - ph->back->start_time;
+		message(ph, EATING, get_time(ph->time));
+		while ((get_time(ph->time) - ph->back->start_time) - ph->last_ate < \
+				ph->back->time_to_eat);
+		drop_forks(ph, BOTH);
+		ph->times_ate++;
 	}
 }
 
 void	sleep_think(t_philo *ph)
 {
-	long int started_sleeping;
+	long int	started_sleeping;
 
 	started_sleeping = get_time(ph->time);
 	message(ph, SLEEPING, started_sleeping);
 	while(get_time(ph->time) - started_sleeping < ph->back->time_to_sleep)
-		if (get_time(ph->time) - ph->last_ate > ph->back->time_to_die)
-			kill(ph, get_time(ph->time));
-	message(ph, THINKING, get_time(ph->time));
+		is_dead(ph);
+	if(!check_death(ph))
+		message(ph, THINKING, get_time(ph->time));
 }
 
 void	message(t_philo *ph, int i, long int timer)
