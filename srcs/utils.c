@@ -6,11 +6,11 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/29 12:38:49 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 16:22:03 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosophers.h"
+#include "../includes/philosophers.h"
 
 int	ft_atoi(const char *nptr)
 {

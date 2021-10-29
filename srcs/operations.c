@@ -6,11 +6,11 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 23:07:35 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/29 12:30:53 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 16:21:51 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosophers.h"
+#include "../includes/philosophers.h"
 
 void	drop_forks(t_philo *ph, int i)
 {

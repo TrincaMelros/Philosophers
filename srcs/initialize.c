@@ -6,18 +6,11 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/29 12:26:59 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 16:21:43 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosophers.h"
-
-/*
-**					# Var Attribution #
-**
-**		Fills up the main t_env struct with the main arguments, as well as
-**		initializing some of its variables.
-*/
+#include "../includes/philosophers.h"
 
 void	var_attribution(t_env *args, int argc, char **argv)
 {
@@ -46,18 +39,6 @@ void	var_attribution(t_env *args, int argc, char **argv)
 		args->fork_lock[i] = 0;
 }
 
-/*
-**					# Init Philo #
-**
-**		Iterates number_of_philo times and fills up the structs t_philo.
-**		Each of the structs represents one philosopher. It assigns a number
-**		i + 1 to each of them, so the first philosopher is 1 instead of 0.
-**		It then links each struct back to the main t_env struct to have an
-**		easier time accessing variables inside the threads. Finally, it
-**		initializes the mutexes(forks) and assigns left and right fork
-**		pointers to each philosopher for easier access.
-*/
-
 void	init_philo(t_env *args)
 {
 	int			i;
@@ -84,14 +65,6 @@ void	init_philo(t_env *args)
 		}
 	}
 }
-
-/*
-**					# Init Threads #
-**
-**		Iterates num_of_philo times and initializes the threads. It passes each
-**		thread the corresponding t_philo struct. It also initializes the
-**		start_time variable, to keep the time the programs started running.
-*/
 
 void	init_threads(t_env *args)
 {

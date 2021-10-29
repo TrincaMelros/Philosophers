@@ -6,11 +6,11 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:04:39 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 14:09:22 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 16:22:22 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosophers.h"
+#include "../includes/philosophers.h"
 
 int	is_digit(char **argv, int argc)
 {
