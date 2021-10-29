@@ -6,25 +6,13 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:51:01 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/29 12:26:56 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:39:20 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philosophers.h"
 
-int	check_death(t_philo *ph)
-{
-	int d;
-
-	d = 0;
-	pthread_mutex_lock(&ph->back->death);
-	if (ph->back->deaths == 1)
-		d = 1;
-	pthread_mutex_unlock(&ph->back->death);
-	return (d);
-}
-
-void*	routine(void* arg)
+void	*routine(void *arg)
 {
 	t_philo	*ph;
 
@@ -35,14 +23,15 @@ void*	routine(void* arg)
 			pick_forks(ph);
 		is_dead(ph);
 		if (check_death(ph))
-			break;
+			break ;
 		eating(ph);
 		if (check_death(ph))
-			break;
+			break ;
 		if (ph->back->last_arg && ph->times_ate == ph->back->num_times_to_eat)
-			while(!all_philos_ate(ph->back));
+			while (!all_philos_ate(ph->back))
+				;
 		if (check_death(ph) || all_philos_ate(ph->back))
-			break;
+			break ;
 		sleep_think(ph);
 	}
 	return (NULL);
@@ -51,7 +40,7 @@ void*	routine(void* arg)
 int	main(int argc, char **argv)
 {
 	t_env	*args;
-	
+
 	if (arg_validation(argc, argv))
 		return (1);
 	args = malloc(sizeof(t_env));

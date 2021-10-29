@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 23:07:35 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/29 12:26:57 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:30:53 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	eating(t_philo *ph)
 		ph->last_ate = get_time(ph->time) - ph->back->start_time;
 		message(ph, EATING, get_time(ph->time));
 		while ((get_time(ph->time) - ph->back->start_time) - ph->last_ate < \
-				ph->back->time_to_eat);
+				ph->back->time_to_eat)
+			;
 		drop_forks(ph, BOTH);
 		ph->times_ate++;
 	}
@@ -72,9 +73,10 @@ void	sleep_think(t_philo *ph)
 
 	started_sleeping = get_time(ph->time);
 	message(ph, SLEEPING, started_sleeping);
-	while(get_time(ph->time) - started_sleeping < ph->back->time_to_sleep)
-		is_dead(ph);
-	if(!check_death(ph))
+	while (get_time(ph->time) - started_sleeping < ph->back->time_to_sleep)
+		is_dead(ph)
+		;
+	if (!check_death(ph))
 		message(ph, THINKING, get_time(ph->time));
 }
 
@@ -93,10 +95,12 @@ void	message(t_philo *ph, int i, long int timer)
 	else if (i == 4)
 		printf("[%ld]: %d is thinking\n", timer - og_time, ph->nbr);
 	else if (i == 5)
+	{
 		if (ph->back->death_print == 0)
 		{
 			printf("[%ld]: %d died\n", timer - og_time, ph->nbr);
 			ph->back->death_print++;
 		}
+	}
 	pthread_mutex_unlock(&ph->back->message_lock);
 }

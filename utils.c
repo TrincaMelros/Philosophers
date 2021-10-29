@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 13:20:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/29 12:21:24 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:38:49 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_atoi(const char *nptr)
 
 long int	get_time(struct timeval t)
 {
-	long int f;
+	long int	f;
 
 	gettimeofday(&t, NULL);
 	f = (t.tv_sec * 1000) + (t.tv_usec / 1000);
@@ -49,7 +49,8 @@ long int	get_time(struct timeval t)
 
 void	is_dead(t_philo *ph)
 {
-	if((get_time(ph->time) - ph->back->start_time) - ph->last_ate > ph->back->time_to_die)
+	if ((get_time(ph->time) - ph->back->start_time) - ph->last_ate \
+			> ph->back->time_to_die)
 	{
 		pthread_mutex_lock(&ph->back->death);
 		ph->back->deaths = 1;
@@ -58,9 +59,21 @@ void	is_dead(t_philo *ph)
 	}
 }
 
+int	check_death(t_philo *ph)
+{
+	int	d;
+
+	d = 0;
+	pthread_mutex_lock(&ph->back->death);
+	if (ph->back->deaths == 1)
+		d = 1;
+	pthread_mutex_unlock(&ph->back->death);
+	return (d);
+}
+
 int	all_philos_ate(t_env *args)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < args->num_of_philo)

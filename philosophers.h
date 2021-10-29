@@ -6,18 +6,18 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/29 12:27:01 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:39:17 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <stdlib.h>
 
 # define TAKEN_FORK 1
 # define EATING		2
@@ -62,7 +62,7 @@ typedef struct s_env {
 
 	struct timeval	start;
 	long int		start_time;
-	
+
 	t_philo			philo[200];
 	int				fork_lock[200];
 	pthread_mutex_t	fork[200];
@@ -86,8 +86,8 @@ void		garbage_collector(t_env *args);
 /*		Utils		*/
 int			ft_atoi(const char *nptr);
 long int	get_time(struct timeval time);
-void		kill(t_philo *ph, long int timer);
 void		is_dead(t_philo *ph);
+int			check_death(t_philo *ph);
 int			all_philos_ate(t_env *args);
 
 /*		Operations		*/
@@ -97,7 +97,6 @@ void		eating(t_philo *ph);
 void		sleep_think(t_philo *ph);
 void		message(t_philo *ph, int i, long int timer);
 
-void*		routine(void* arg);
-int			check_death(t_philo *ph);
+void		*routine(void *arg);
 
 #endif
