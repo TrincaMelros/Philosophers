@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 23:07:35 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 18:12:03 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:26:57 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ void	message(t_philo *ph, int i, long int timer)
 	else if (i == 4)
 		printf("[%ld]: %d is thinking\n", timer - og_time, ph->nbr);
 	else if (i == 5)
-		printf("[%ld]: %d died\n", timer - og_time, ph->nbr);
+		if (ph->back->death_print == 0)
+		{
+			printf("[%ld]: %d died\n", timer - og_time, ph->nbr);
+			ph->back->death_print++;
+		}
 	pthread_mutex_unlock(&ph->back->message_lock);
 }

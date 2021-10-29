@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 22:20:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 18:08:54 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:26:59 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	var_attribution(t_env *args, int argc, char **argv)
 		args->last_arg = 0;
 	}
 	args->deaths = 0;
+	args->death_print = 0;
 	pthread_mutex_init(&(args->message_lock), NULL);
 	pthread_mutex_init(&(args->death), NULL);
 	i = -1;

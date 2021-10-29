@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:06:48 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/28 17:57:51 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:27:01 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_env {
 	int				num_times_to_eat;
 	int				deaths;
 	int				last_arg;
+	int				death_print;
 
 	struct timeval	start;
 	long int		start_time;
